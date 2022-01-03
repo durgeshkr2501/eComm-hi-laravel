@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\usersController;
+use App\Http\Controllers\userController;
 use App\Http\Controllers\productController;
 
 
@@ -21,6 +22,6 @@ use App\Http\Controllers\productController;
 //    return view('welcome');
 //});
 
-Route::view("/login","login");
-Route::post("/login",[userController::class,'login']);
+Route::get("/login", [LoginController::class, 'showLoginForm']);
+Route::post("/login",[LoginController::class,'login']);
 Route::get("/",[productController::class,'index']);
