@@ -22,6 +22,13 @@ use App\Http\Controllers\productController;
 //    return view('welcome');
 //});
 
-Route::get("/login", [LoginController::class, 'showLoginForm']);
+Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login');
 Route::post("/login",[LoginController::class,'login']);
 Route::get("/",[productController::class,'index']);
+Route::get("/detail/{id}",[productController::class,'detail']);
+Route::get("search",[productController::class,'search']);
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::post("add_to_cart",[productController::class,'addToCart']);
+    Route::post('logout', [LoginController::class, 'logout']);
+});

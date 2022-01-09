@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class userAuth
+class UserAuth
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,11 @@ class userAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->path()=="login" && $request->session()->has('user'))
+        if($request->path()=="login" && auth()->check())
         {
-            return redirect("/");
+            return redirect('/');
         }
+        
         return $next($request);
     }
 }
