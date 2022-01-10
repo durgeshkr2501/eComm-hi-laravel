@@ -6,6 +6,8 @@ use App\Models\product;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class productController extends Controller
 {
@@ -41,5 +43,21 @@ class productController extends Controller
         $cart->save();
         
         return redirect('/');
+    }
+    function cartList()
+    {
+        $user = Auth::user('user')['id'];
+       // $userId= Auth::get('user')['id'];
+      $data=  DB::table('cart')
+        ->join('products','cart.product_id','products.id')
+        ->select('products.*','cart.id as cartid')
+        ->where('cart.user_id',$user)
+        ->get();
+        return view('cartlist',['products'=>$data]);
+    }
+    function removeCart($id)
+    {
+       cart::destroy($id);
+       return redirect('cartlist');
     }
 }

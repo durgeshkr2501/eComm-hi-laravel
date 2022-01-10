@@ -36,7 +36,7 @@
         
          
           <li>
-            <a href=""> Items:{{ $total }} </a>
+            <a href="/cartlist"> Items:{{ $total }} </a>
           </li>
           <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ auth()->user()->name }}
