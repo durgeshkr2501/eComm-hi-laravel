@@ -2,61 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-comm Project</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css">
-    <script src="/assets/jquery.js" ></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="/assets/bootstrap/bootstrap.bundle.min.js">
+    <meta charset="utf-8">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-    </script>
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ asset('assets/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
     @include('layouts.header')
     @yield('content')
     @include('layouts.footer')
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="{{ asset('assets/mail/jqBootstrapValidation.min.js') }}"></script>
+    <script src="{{ asset('assets/mail/contact.js') }}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 </body>
-<style>
-    .custom-login {
-        height: 500px;
-        padding-top: 100px;
-    }
-    .slider-img{
-        height: 400px !important;
 
-        }
-    .custom-product{
-        height: 600px;
-    }    
-    .slider-text{
-        
-        color: black;
-    }
-    .trending-img{
-        height: 100px;
-
-    }
-    .trending-item{
-        float: left;
-        width: 20%;
-    }
-    .trending-wrapper{
-        margin: 20px;
-    }
-    .detail-img{
-        height: 200px;
-    }
-    .search-box{
-        width: 500px !important
-    }
-    .cart-list-devider{
-        border-bottom: 1px solid #cccc;
-        margin-bottom: 20px;
-        padding-bottom: 20px;
-    }
-</style>
 </html>

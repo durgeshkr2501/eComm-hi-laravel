@@ -3,7 +3,8 @@
 
 <div class="container custom-login">
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
             @if(session()->has('error'))
                 <p>{{ session()->get('error') }}</p>
             @endif

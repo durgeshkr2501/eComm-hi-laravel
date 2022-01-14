@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('content')
 
-<div class="custom-product">
-
-    <div class="col-sm-6 col-sm-offset-3">
+<div class="row custom-product">
+<div class="col-sm-3"></div>
+    <div class="col-sm-6 ">
         <table class="table table-striped">
 
             <tbody>

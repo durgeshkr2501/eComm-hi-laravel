@@ -23,7 +23,7 @@ use App\Http\Controllers\productController;
 //});
 
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login');
-Route::post("/login",[LoginController::class,'login']);
+ Route::post("/login",[LoginController::class,'login']);
 Route::get("/",[productController::class,'index']);
 Route::get("/detail/{id}",[productController::class,'detail']);
 Route::get("search",[productController::class,'search']);
