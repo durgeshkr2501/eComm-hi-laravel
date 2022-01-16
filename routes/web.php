@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\userController;
 use App\Http\Controllers\productController;
+
 
 
 /*
@@ -24,12 +26,13 @@ use App\Http\Controllers\productController;
 
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login');
  Route::post("/login",[LoginController::class,'login']);
-Route::get("/",[productController::class,'index']);
+ Route::get("/",[productController::class,'index']);
 Route::get("/detail/{id}",[productController::class,'detail']);
 Route::get("search",[productController::class,'search']);
-Route::view("/register",[LoginController::class,'Register']);
+Route::get("/registration", [RegistrationController::class, 'showRegistrationForm'])->name('registration');
+ Route::post("/registration",[RegistrationController::class,'registration']);
 
-Route::group(['middleware' => 'auth'], function() { 
+    Route::group(['middleware' => 'auth'], function() { 
     Route::post("add_to_cart",[productController::class,'addToCart']);
     Route::post('logout', [LoginController::class, 'logout']);
     Route::get("cartlist",[productController::class,'cartList']);

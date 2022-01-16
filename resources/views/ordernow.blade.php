@@ -9,22 +9,22 @@
             <tbody>
                 <tr>
                     <td>price</td>
-                    <td>Rs {{$total}}/ </td>
+                    <td><i class="fas fa-rupee-sign"> {{$total}} </td>
                 </tr>
                
                 <tr>
                     <td>Tax</td>
-                    <td>Rs 0/ </td>
+                    <td class=> Free </td>
 
                 </tr>
                 <tr>
                     <td>Delivery Charge</td>
-                    <td>Rs 100/ </td>
+                    <td><i class="fas fa-rupee-sign"> 100 </td>
 
                 </tr>
                 <tr>
                     <td>Total Amount</td>
-                    <td>Rs {{$total+100}}/</td>
+                    <td><i class="fas fa-rupee-sign">{{$total+100}}</td>
 
                 </tr>
             </tbody>

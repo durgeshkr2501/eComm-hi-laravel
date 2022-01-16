@@ -37,11 +37,18 @@ class productController extends Controller
     function addToCart(Request $req)
     {
         $user = Auth::user();
-
-        $cart = new Cart;
-        $cart->user_id = $user->id;
-        $cart->product_id = $req->product_id;
-        $cart->save();
+        // check if product already added to cart 
+        $cartProduct = Cart::where('user_id', $user->id)
+                            ->where('product_id', $req->product_id)
+                            ->get();
+        if($cartProduct->count()) {
+            
+        } else {
+            $cart = new Cart;
+            $cart->user_id = $user->id;
+            $cart->product_id = $req->product_id;
+            $cart->save();
+        }
         
         return redirect('/');
     }
@@ -49,27 +56,30 @@ class productController extends Controller
     {
         $user = Auth::user()['id'];
        // $userId= session::get('user')['id'];
-      $data=  DB::table('cart')
-        ->join('products','cart.product_id','products.id')
-        ->select('products.*','cart.id as cartid')
-        ->where('cart.user_id',$user)
+      $data=  Cart::join('products','carts.product_id','products.id')
+        ->select('products.*','carts.id as cartid')
+        ->where('carts.user_id',$user)
         ->get();
-        return view('cartlist',['products'=>$data]);
+        
+        $total =Cart::join('products','carts.product_id','products.id')
+         ->where('carts.user_id',$user)
+         ->sum('products.price');
+        return view('cartlist',['products'=>$data, 'total' => $total]);
     }
     public function removeCart($id)
     {
-       cart::destroy($id);
+        Cart::destroy($id);
        return redirect('cartlist');
     }
     public function orderNow()
     {
         $user = Auth::user()['id'];
        // $userId= session::get('user')['id'];
-      $total = DB::table('cart')
-        ->join('products','cart.product_id','products.id')
-         ->where('cart.user_id',$user)
+      $total = Cart::join('products','carts.product_id','products.id')
+         ->where('carts.user_id',$user)
          ->sum('products.price');
         return view('ordernow',['total'=>$total]);
+       ;
     }
     public function orderPlace(Request $req)
     {
@@ -99,6 +109,7 @@ class productController extends Controller
           ->get();
          return view('myorder',['Orders'=>$Orders]);
     }
+    
    
 
 }
