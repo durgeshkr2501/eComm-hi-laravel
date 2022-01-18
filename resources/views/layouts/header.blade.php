@@ -54,8 +54,8 @@
     </div>
     <div class="col-lg-3 col-6 text-right">
       <a href="" class="btn border">
-        <i class="fas fa-heart text-primary"></i>
-        <span class="badge">0</span>
+        <i class="fas fa-heart text-primary"  value= "1"></i>
+        <span class="badge" value= "1">0</span>
       </a>
       <a href="/cartlist" class="btn border"><i class="fas fa-shopping-cart text-primary"></i>
         <span class="badge">
@@ -135,9 +135,9 @@
             </div>
             @else
             <a href="/login" class="nav-item nav-link">Login</a>
+            <a href="/registration" class="nav-item nav-link">Register</a>
             @endif
 
-            <a href="/registration" class="nav-item nav-link">Register</a>
           </div>
         </div>
       </nav>

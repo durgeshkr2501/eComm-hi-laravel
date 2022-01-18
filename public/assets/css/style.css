@@ -9582,3 +9582,8 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+
+.qty-disable {
+  cursor: no-drop !important;
+  cursor: block;
+}

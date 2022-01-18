@@ -89,6 +89,7 @@ class ProductSeeder extends Seeder
                 "category" => "mobile",
                 "gallery" => "Realme 5pro.jpg"
             ],
+            
         ]);
     }
 }

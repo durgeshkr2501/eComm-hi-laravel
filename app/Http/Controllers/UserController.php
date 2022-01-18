@@ -19,8 +19,6 @@ class usercontroller extends Controller
             return redirect('/');
         }
     }
-    function registration(Request $req)
-    {
-        
-    }
+    
+    
 }
