@@ -72,7 +72,7 @@ class ProductSeeder extends Seeder
                 'name' => 'LG Refrigerator',
                 "price" => "45490",
                 "description" => "LG 420 L Frost Free Double Door 5 Star Refrigerator",
-                "category" => "Refrigerato",
+                "category" => "Refrigerator",
                 "gallery" => "LG-Refrigerator1200Wx1200H.jpg"
             ],
             [
@@ -89,6 +89,7 @@ class ProductSeeder extends Seeder
                 "category" => "mobile",
                 "gallery" => "Realme 5pro.jpg"
             ],
+           
             
         ]);
     }

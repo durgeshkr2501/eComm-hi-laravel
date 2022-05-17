@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserLoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,16 +17,16 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    function login(Request $request)
+    function login(UserLoginRequest $request)
 
     {
-     session()->forget('error');
+    //  session()->forget('error');
      $user = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
      if ($user) {
          return redirect('/');
      }
 
-     session()->put('error', 'Please fill the correct user id and password');
+    //  session()->put('error', 'Please fill the correct user id and password');
      return redirect()->back();
     }
 

@@ -37,15 +37,14 @@
       </a>
     </div>
     <div class="col-lg-6 col-6 text-left">
-      <form action="">
+      <form action="/poroducts">
 
 
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for products">
+          <input type="text" name="query" class="form-control" placeholder="Search for products">
           <div class="input-group-append">
-            <span class="input-group-text bg-transparent text-primary">
-              <a href="/search"> <i class="fa fa-search"></i></a>
-            </span>
+              <button class="btn border" type="submit"> <i class="fa fa-search"></i></button>
+            
           </div>
         </div>
 
@@ -54,8 +53,8 @@
     </div>
     <div class="col-lg-3 col-6 text-right">
       <a href="" class="btn border">
-        <i class="fas fa-heart text-primary"  value= "1"></i>
-        <span class="badge" value= "1">0</span>
+        <i class="fas fa-heart text-primary" value="1"></i>
+        <span class="badge" value="1">0 </span>
       </a>
       <a href="/cartlist" class="btn border"><i class="fas fa-shopping-cart text-primary"></i>
         <span class="badge">
@@ -110,18 +109,15 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-          <div class="navbar-nav mr-auto py-0">
-
-
-
-            <a href="contact.html" class="nav-item nav-link">Contact</a>
+        <div class="navbar-nav py-0">
+             <a href="/myorder" class="nav-item nav-link text-success">My Order</a>
           </div>
-          <div class="navbar-nav ml-auto py-0">
-
-
-            @if(auth()->check())
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          <div class="navbar-nav mr-auto py-0">
+             <a href="contact.html" class="nav-item nav-link">Contact</a>
+          </div>
+              @if(auth()->check())
+              <div class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle text-success" data-toggle="dropdown">
                 {{ auth()->user()->name }}
               </a>
               <div class="dropdown-menu rounded-0 m-0">

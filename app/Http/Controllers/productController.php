@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\product;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\UserOrdernowRequest;
 
 class ProductController extends Controller
 {
@@ -21,19 +23,29 @@ class ProductController extends Controller
     }
     function detail($id)
     {
+         
         $data = product::find($id);
         return view('detail', ['product' => $data]);
+        
     }
     function search(Request $req)
     {
         $query = $req->input('query');
         $data = product::where('name', 'like', '%' . $query . '%')
             ->orWhere('category', 'like', "%$query%")
-            ->where('description', 'like', "%$query%")
+            // ->where('description', 'like', "%$query%")
             ->get();
 
         return view('search', ['products' => $data]);
     }
+
+    public function buyNow(Request $req)
+    {
+        $cart = $this->addToCart($req);
+
+        return redirect(route('orderNow', ['cart' => $cart->id]));
+    }
+
     function addToCart(Request $req)
     {
         $user = Auth::user();
@@ -51,9 +63,13 @@ class ProductController extends Controller
             $cart->product_id = $req->product_id;
             $cart->quantity = 1;
             $cart->save();
-        }
+            session()->flash('message', 'Product added successfully!');
 
-        return redirect('/');
+       }
+        if ($req->has('orderType') && $req->get('orderType') == 'now') {
+            return $cart;
+        }
+        return redirect()->back();
     }
     function cartList()
     {
@@ -77,17 +93,37 @@ class ProductController extends Controller
     }
     public function orderNow()
     {
+        // filter for single product
+
+        $cartId = request('cart');
         $user = Auth::user()['id'];
         // $userId= session::get('user')['id'];
-        $total = Cart::join('products', 'carts.product_id', 'products.id')
-            ->where('carts.user_id', $user)
-            ->sum('products.price');
-        return view('ordernow', ['total' => $total]);;
+        $total = Cart::join('products', 'carts.product_id', 'products.id', 'carts.quantity')
+            ->where('carts.user_id', $user);
+            
+
+        if (!is_null($cartId)) {
+            $total = $total->where("carts.id", $cartId);
+        }
+
+        $total    = $total->sum(DB::raw('products.price * carts.quantity'));
+
+        return view('ordernow', ['total' => $total]);
+        
     }
-    public function orderPlace(Request $req)
+    public function orderPlace(UserOrdernowRequest $req)
     {
         $user = Auth::user()['id'];
-        $allCart = Cart::where('user_id', $user)->get();
+        $cartId = request('cart');
+
+        $allCart = Cart::where('user_id', $user);
+
+        if (!is_null($cartId)) {
+            $allCart = $allCart->where('id', $cartId);
+        }
+
+        $allCart = $allCart->get();
+
         foreach ($allCart as $Cart) {
             $Order = new Order;
             $Order->product_id = $Cart['product_id'];
@@ -98,31 +134,41 @@ class ProductController extends Controller
             $Order->payment_status = "pending";
             $Order->save();
         }
-        Cart::where('user_id', $user)->delete();
-        return redirect('/');
+
+        $deletableCart = Cart::where('user_id', $user);
+
+        if (!is_null($cartId)) {
+            $deletableCart = $deletableCart->where('id', $cartId);
+        }
+
+        $deletableCart->delete();
+       
+
+        return redirect('myorder');
     }
     public function myOrder()
     {
         $user = Auth::user()['id'];
         $Orders =  DB::table('orders')
-            ->join('products', 'Orders.product_id', 'products.id')
-            ->where('Orders.user_id', $user)
-            ->get();
+            ->join('products', 'orders.product_id', 'products.id')
+            ->where('orders.user_id', $user)
+            ->orderBy('orders.created_at', 'desc')->get();
         return view('myorder', ['Orders' => $Orders]);
+       ;
     }
 
-    public function increamentOrDecrment($type) 
+    public function increamentOrDecrment($type)
     {
         $cartId = request()->get('cart_id');
         $cart = Cart::find($cartId);
 
-        if($type == "decrement") {
+        if ($type == "decrement") {
             $cart->quantity = $cart->quantity - 1;
-        } else if($type == "increment") {
+        } else if ($type == "increment") {
             $cart->quantity = $cart->quantity + 1;
         }
-        
-        if($cart->quantity > 0) {
+
+        if ($cart->quantity > 0) {
             $cart->save();
         }
 
