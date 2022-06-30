@@ -1,3 +1,12 @@
+<?php
+
+use App\Models\Category;
+
+   $categories = Category::select("id", "category_id", "name", "slug")
+   ->with("childCategory")
+   ->whereNull('category_id')->get()->toArray();
+?>
+
 <!-- Topbar Start -->
 <div class="container-fluid">
   <div class="row bg-secondary py-2 px-xl-5">
@@ -43,8 +52,8 @@
         <div class="input-group">
           <input type="text" name="query" class="form-control" placeholder="Search for products">
           <div class="input-group-append">
-              <button class="btn border" type="submit"> <i class="fa fa-search"></i></button>
-            
+            <button class="btn border" type="submit"> <i class="fa fa-search"></i></button>
+
           </div>
         </div>
 
@@ -78,26 +87,27 @@
         <h6 class="m-0">Categories</h6>
         <i class="fa fa-angle-down text-dark"></i>
       </a>
-      <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+      <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1009;">
         <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+          @if(isset($categories))
+          @foreach($categories as $category)
           <div class="nav-item dropdown">
-            <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i class="fa fa-angle-down float-right mt-1"></i></a>
-            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-              <a href="" class="dropdown-item">Men's Dresses</a>
-              <a href="" class="dropdown-item">Women's Dresses</a>
-              <a href="" class="dropdown-item">Baby's Dresses</a>
-            </div>
+            <a href="#" class="nav-link" data-toggle="dropdown">{{$category['name']}}
+            @if($category['child_category'])
+              <i class="fa fa-angle-down float-right mt-1"></i>
+            @endif
+            </a>
+            @if($category['child_category'])
+              <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                @foreach($category['child_category'] as $child)
+                  <a href="/store/{{$category['slug']}}/{{$child['slug']}}/{{$child['id']}}" class="dropdown-item">{{ $child['name'] }}</a>
+                @endforeach
+              </div>
+            @endif
           </div>
-          <a href="" class="nav-item nav-link">Shirts</a>
-          <a href="" class="nav-item nav-link">Jeans</a>
-          <a href="" class="nav-item nav-link">Swimwear</a>
-          <a href="" class="nav-item nav-link">Sleepwear</a>
-          <a href="" class="nav-item nav-link">Sportswear</a>
-          <a href="" class="nav-item nav-link">Jumpsuits</a>
-          <a href="" class="nav-item nav-link">Blazers</a>
-          <a href="" class="nav-item nav-link">Jackets</a>
-          <a href="" class="nav-item nav-link">Shoes</a>
-        </div>
+          @endforeach
+          @endif
+           </div>
       </nav>
     </div>
     <div class="col-lg-9">
@@ -109,35 +119,35 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-        <div class="navbar-nav py-0">
-             <a href="/myorder" class="nav-item nav-link text-success">My Order</a>
+          <div class="navbar-nav py-0">
+            <a href="/myorder" class="nav-item nav-link text-success">My Order</a>
           </div>
           <div class="navbar-nav mr-auto py-0">
-             <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
           </div>
-              @if(auth()->check())
-              <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle text-success" data-toggle="dropdown">
-                {{ auth()->user()->name }}
-              </a>
-              <div class="dropdown-menu rounded-0 m-0">
+          @if(auth()->check())
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle text-success" data-toggle="dropdown">
+              {{ auth()->user()->name }}
+            </a>
+            <div class="dropdown-menu rounded-0 m-0">
 
-                <form id="logout" action="/logout" method="post">
-                  @csrf()
-                </form>
-                <a href="javascript:void(0)" class="dropdown-item" onclick="$('#logout').submit()"> Logout</a>
+              <form id="logout" action="/logout" method="post">
+                @csrf()
+              </form>
+              <a href="javascript:void(0)" class="dropdown-item" onclick="$('#logout').submit()"> Logout</a>
 
-              </div>
             </div>
-            @else
-            <a href="/login" class="nav-item nav-link">Login</a>
-            <a href="/registration" class="nav-item nav-link">Register</a>
-            @endif
-
           </div>
+          @else
+          <a href="/login" class="nav-item nav-link">Login</a>
+          <a href="/registration" class="nav-item nav-link">Register</a>
+          @endif
+
         </div>
-      </nav>
     </div>
+    </nav>
   </div>
+</div>
 </div>
 <!-- Navbar End -->

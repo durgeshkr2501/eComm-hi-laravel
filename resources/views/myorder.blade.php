@@ -20,10 +20,7 @@
                 <div class="col-sm-3">
                 <p ><i class="fas fa-rupee-sign"></i>{{ $item->price +100}}</p>
                </div>
-               <div class="col-sm-3">
-                   <p class="deliveryDate">Delivery expeted by 5 march</p>
-                   <p class="xyz">Your Order has been placed</p>
-               </div>
+              
             </div>
             
             @endforeach

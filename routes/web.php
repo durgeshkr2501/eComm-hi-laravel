@@ -35,6 +35,7 @@ Route::post("/login", [LoginController::class, 'login']);
 Route::get("/", [HomeController::class, 'index']);
 Route::get("/detail/{id}", [ProductController::class, 'detail']);
 Route::get("poroducts", [ProductController::class, 'search']);
+Route::get("store/{category}/{child_category}/{child_category_id}", [ProductController::class, 'search']);
 Route::get("/registration", [RegistrationController::class, 'showRegistrationForm'])->name('registration');
 Route::post("/registration", [RegistrationController::class, 'registration']);
 
@@ -57,7 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post("/product/edit", [AdminProductController::class, 'update'])->name('product.update');
     Route::post("/product/create", [AdminProductController::class, 'store'])->name('products.store-product');
     Route::get("/product/delete/{id}",[AdminProductController::class,'deleteProduct'])->name('product.delete');
-    Route::get("/removeimage/{id}", [ProductController::class, 'removeImage']);
+    Route::get("/removeimage/{id}", [AdminProductController::class, 'remove_Image'])->name('image.delete');
     Route::get("/product/status-update/{id}",[AdminProductController::class,'Status_Update'])->name('product.status-update');
     Route::get("/category/add", [CategoryController::class, 'create'])->name('category.create');
     Route::post("/category/add", [CategoryController::class, 'addCategory'])->name('category.add');

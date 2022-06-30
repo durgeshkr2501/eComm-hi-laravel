@@ -13,6 +13,7 @@
                     <thead class="bg-secondary text-dark">
 
                         <tr>
+                            
                             <th>Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -25,8 +26,11 @@
 
                         @foreach($products as $key => $product)
                         <tr>
-                            <td class="align-middle"><img src="images/{{ $product->gallery }}" alt="" style="width: 50px;"> {{ $product->name }}</td>
-                            <td class="align-middle"><i class="fas fa-rupee-sign"></i>{{$product->price}}</td>
+                            
+                            <td> {{ $product->name }}</td>
+                            <td class="align-middle"><i class="fas fa-rupee-sign"></i>
+                            {{  number_format($product['discounted_price'],2) }}
+                            </td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -36,14 +40,14 @@
                                     </div>
                                     <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{ $product->quantity }}">
                                     <div class="input-group-btn">
-                                        <a href="/product/quantity/increment?cart_id={{ $product->cartid }}" class="btn btn-sm btn-success btn-plus" >
+                                        <a href="/product/quantity/increment?cart_id={{ $product->cartid }}" class="btn btn-sm btn-success btn-plus">
                                             <i class="fa fa-plus"></i>
                                         </a>
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"><i class="fas fa-rupee-sign"></i>{{ $product->price * $product->quantity}}</td>
-                            <td class="align-middle"><a href="/removecart/{{$product->cartid}}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure')"><i class="fa fa-times"></i></a></td>
+                            <td class="align-middle"><i class="fas fa-rupee-sign"></i>{{ $product->discounted_price * $product->quantity}}</td>
+                            <td class="align-middle"><a href="/removecart/{{$product->cartid}}" class="btn btn-sm btn-danger" ><i class="fa fa-times"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -91,13 +95,13 @@
             </div>
             @else
 
-                <div class="col-lg-12 text-center">
-                    <h5>My Cart</h5>
-                    <img class="cart_image" src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
-                    <h5 class="impty_cart">Your cart is empty! </h5>
-                    <p class="add_item">Add items to it now.</p>
-                    <h5> <a class="btn btn-info" href="/">Shop now</a> </h5>
-                </div>
+            <div class="col-lg-12 text-center">
+                <h5>My Cart</h5>
+                <img class="cart_image" src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
+                <h5 class="impty_cart">Your cart is empty! </h5>
+                <p class="add_item">Add items to it now.</p>
+                <h5> <a class="btn btn-info" href="/">Shop now</a> </h5>
+            </div>
             @endif
         </div>
     </div>

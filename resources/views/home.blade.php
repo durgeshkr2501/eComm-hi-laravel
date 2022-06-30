@@ -6,60 +6,22 @@
   @if(session()->has('message'))
   <div class="alert alert-success" role="alert">{{session()->get('message')}}</div>
   @endif
-  <div class="row catogery_row">
-            <div class="col-sm-2">
-              <a href="">
-              <img class="catogery_image" src="/images/grocery.png" alt="">
-              <p class="catogery_name">Grocery</p>
-              </a>
-            </div>
-            <div class="col-sm-2">
-              <a href="">
-                
-            <img class="catogery_image" src="/images/mobiles.webp" alt="">
-            <p class="catogery_name">Mobiles</p>
-            </a>
-            </div>
-            <div class="col-sm-2">
-              <a href="">
-            <img class="catogery_image" src="/images/fashion.png" alt="">
-            <p class="catogery_name">Fashion</p>
-            </a>
-            </div>
-            <div class="col-sm-2">
-              <a href="">
-            <img class="catogery_image" src="/images/electronics.webp" alt="">
-            <p class="catogery_name">Electronics</p>
-            </a>
-            </div>
-            <div class="col-sm-2">
-              <a href="">
-            <img class="catogery_image" src="/images/home.webp" alt="">
-            <p class="catogery_name">Home</p>
-             </div>
-            <div class="col-sm-2">
-              <a href="">
-            <img class="catogery_image" src="/images/appliances.webp" alt="">
-            <p class="catogery_name">Appliances</p>
-            </a>
-            </div>
-             </div>
+
   <div class="row border-top px-xl-5">
     <div class="col-lg-12">
       <div id="header-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-          
+
           @foreach($products as $key => $item)
-          <div class="carousel-item {{ $key ==0? 'active': '' }}" style="height: 300px;">
-            <img src="{{$item['gallery']}}" alt="Image">
+           <div class="carousel-item {{ $key ==0? 'active': '' }}" style="height: 300px;">
+            <img src="{{$item['gallery']}}" style="width: 100px; height:auto; margin:5em;" alt="Image">
             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
               <div class="p-4" style="max-width: 400px;">
-
-                <h3 class="display-4 text-white font-weight-semi-bold mb-4">{{ $item['name'] }}</h3>
+                  <h5 class="display-block mb-4"  style=" height: 100px;">{{ $item['name'] }}</h5> 
                 <a href="detail/{{$item['id']}}" class="btn btn-light py-2 px-3">Shop Now</a>
-              </div>
-            </div>
-          </div>
+              </div> 
+            </div> 
+          </div> 
           @endforeach
 
         </div>

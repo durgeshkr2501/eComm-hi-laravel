@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\product;
+use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Category;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,26 +18,44 @@ class ProductController extends Controller
     //
     function index()
     {
-        //return "welcom to product page";
-        $data = product::all();
-        return view('products.product', ['products' => $data]);
+        $categories = Category::select("id", "category_id", "name", "slug")
+        ->with("childCategory")
+        ->whereNull('category_id')->get()->toArray();
+
+        $data = product::paginate(8);
+        return view('products.product', ['products' => $data],compact('categories'));
     }
     function detail($id)
     {
+       
          
         $data = product::find($id);
         return view('detail', ['product' => $data]);
         
     }
-    function search(Request $req)
+    function search(Request $req, $category = null, $child_category = null, $child_category_id = null)
     {
-        $query = $req->input('query');
-        $data = product::where('name', 'like', '%' . $query . '%')
-            ->orWhere('category', 'like', "%$query%")
-            // ->where('description', 'like', "%$query%")
-            ->get();
+        $categories = Category::select("id", "category_id", "name", "slug")
+        ->with("childCategory")
+        ->whereNull('category_id')->get()->toArray();
 
-        return view('search', ['products' => $data]);
+
+        $query_string = $req->input('query');
+        $query = product::query();
+        
+        if($query_string) {
+            $query = $query->where('name', 'like', '%' . $query_string . '%')
+                ->orWhere('category', 'like', "%$query_string%");
+        }
+            // ->where('description', 'like', "%$query%")
+        
+        if(!is_null($child_category_id)) {
+            $query = $query->where("category", $child_category_id);
+        }
+
+        $data = $query->get();
+
+        return view('search', ['products' => $data],compact('categories'));
     }
 
     public function buyNow(Request $req)
@@ -73,6 +92,11 @@ class ProductController extends Controller
     }
     function cartList()
     {
+       // $data = product::find($id);
+        $categories = Category::select("id", "category_id", "name", "slug")
+        ->with("childCategory")
+        ->whereNull('category_id')->get()->toArray();
+
         $user = Auth::user()['id'];
         // $userId= session::get('user')['id'];
         $products =  Cart::join('products', 'carts.product_id', 'products.id')
@@ -81,10 +105,10 @@ class ProductController extends Controller
             ->get();
 
         $total = $products->sum(function ($product) {
-            return $product->price * $product->quantity;
+            return $product->discounted_price * $product->quantity;
         });
 
-        return view('cartlist', ['products' => $products, 'total' => $total]);
+        return view('cartlist', ['products' => $products, 'total' => $total],compact('categories'));
     }
     public function removeCart($id)
     {
@@ -149,12 +173,16 @@ class ProductController extends Controller
     public function myOrder()
     {
         $user = Auth::user()['id'];
+        
         $Orders =  DB::table('orders')
             ->join('products', 'orders.product_id', 'products.id')
+            
             ->where('orders.user_id', $user)
             ->orderBy('orders.created_at', 'desc')->get();
+           
+            
         return view('myorder', ['Orders' => $Orders]);
-       ;
+       
     }
 
     public function increamentOrDecrment($type)

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\product;
+use App\Models\Product;
 use Illuminate\Support\Facades\file;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 
@@ -15,15 +16,15 @@ class ProductController extends Controller
     public function listing()
     {
         $data = Product::latest()->paginate(10);
-      
+        
         return view('admin.products.listing', ['products' => $data]);
     }
 
 
     public function create()
     {
-
-        return view('admin.products.manage-product');
+        $categories = Category::whereNotNull('category_id')->get();
+        return view('admin.products.manage-product',compact('categories'));
     }
 
     public function store(Request $request)
@@ -37,6 +38,7 @@ class ProductController extends Controller
 
         $product->name = $request->name;
         $product->price = $request->price;
+        $product->product_discount = $request->product_discount;
         $product->category = $request->category;
         $product->description = $request->description;
         $product->status = $request->status == "on" ? '1' : '0';
@@ -81,8 +83,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-
-        return view('admin.products.manage-product', ['product' => $product]);
+        $categories = Category::whereNotNull('category_id')->get();
+        return view('admin.products.manage-product', ['product' => $product, 'categories' => $categories]);
     }
     public function update(Request $request)
     {
@@ -125,13 +127,14 @@ class ProductController extends Controller
 
         return back();
     }
-    public function removeImage($id)
+    public function remove_Image($id)
     {
-        //file::destroy();
+       // file::destroy();
         //return back();
 
-        $product = Product::find($id);
+        $product = Media::find($id);
         $result = $product->delete();
         return back();
     }
+   
 }

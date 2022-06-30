@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
+    protected $appends = ['discounted_price'];
+
+    public function getDiscountedPriceAttribute()
+    {
+        $price = $this->attributes['price'];
+        $percentage = $this->attributes['product_discount'];
+        return $price - ($price * $percentage/100);
+    }
 }

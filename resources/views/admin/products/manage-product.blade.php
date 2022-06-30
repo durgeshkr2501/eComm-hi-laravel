@@ -49,14 +49,11 @@
                         <div class="select-position">
                         <select name="category">
                             <option value="">Select category</option>
-                            <option {{ isset($product) && $product->category == 'mobile'? 'selected' : ''}} value="mobile">Mobile</option>
-                            <option {{ isset($product) && $product->category == 'laptop'? 'selected' : ''}} value="laptop">Laptop</option>
-                            <option {{ isset($product) && $product->category == 'tv'? 'selected' : ''}} value="tv">TV</option>
-                            <option {{ isset($product) && $product->category == 'Washing Machine'? 'selected' : ''}} value="Washing Machine">Washing Machine</option>
-                            <option {{ isset($product) && $product->category == 'Refrigerator'? 'selected' : ''}} value="Refrigerator">Refrigerator</option>
-                            <option {{ isset($product) && $product->category == 'headphone'? 'selected' : ''}} value="headphone">headphone</option>
-                            <option {{ isset($product) && $product->category == 'footwear'? 'selected' : ''}} value="footwear">footwear</option>
-                            <option {{ isset($product) && $product->category == 'clothing'? 'selected' : ''}} value="clothing">clothing</option>
+                            @if(isset($categories))
+                              @foreach($categories as $category)
+                                <option {{ isset($product) && $product->category == $category->id ? 'selected': '' }} value="{{$category->id}}">{{$category->name}}</option>                                                            {{$category->name}}</option>
+                              @endforeach
+                            @endif
                         </select>
                         </div>
                     </div>
@@ -71,6 +68,12 @@
                     <div class="input-style-3">
                         <input type="text" name="price" value="{{ isset($product) ? $product->price : ''}}" placeholder="Price">
                         <span class="icon"><i class="lni lni-rupee"></i></span>
+                    </div>
+
+                    <label> Discount</label>
+                    <div class="input-style-3">
+                        <input type="text" name="product_discount" value="{{ isset($product) ? $product->product_discount : ''}}" placeholder="Discount">
+                        <span class="icon"><i class="fa-solid fa-percent"></i></span>
                     </div>
                     <!-- end input -->
 
@@ -107,9 +110,9 @@
                               @foreach($images as $image)
                                 <div class="col-sm-3">
                                   <img class="img-fluid w-60"   src="/{{ $image->file_name }}" alt="">
-                                  <a href="">
-                                <i class="lni lni-trash-can"></i>
-                                </a>
+                                  <a href="{{ route('image.delete', $image['id']) }}">
+                                    <i class="lni lni-trash-can"></i>
+                                  </a>
                                 </div>
                                 @endforeach
                               @endif

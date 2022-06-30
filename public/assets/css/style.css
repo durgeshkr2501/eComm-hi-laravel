@@ -7559,6 +7559,7 @@ button.bg-dark:focus {
 
 .p-4 {
   padding: 1.5rem !important;
+  
 }
 
 .pt-4,
@@ -9003,7 +9004,7 @@ button.bg-dark:focus {
   }
   .pr-xl-5,
   .px-xl-5 {
-    padding-right: 3rem !important;
+    padding-right: 1rem !important;
   }
   .pb-xl-5,
   .py-xl-5 {
@@ -9011,7 +9012,7 @@ button.bg-dark:focus {
   }
   .pl-xl-5,
   .px-xl-5 {
-    padding-left: 3rem !important;
+    padding-left: 1rem !important;
   }
   .m-xl-n1 {
     margin: -0.25rem !important;
@@ -9415,6 +9416,7 @@ a.text-dark:hover, a.text-dark:focus {
   }
   body {
     min-width: 992px !important;
+   
   }
   .container {
     min-width: 992px !important;
@@ -9449,6 +9451,7 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #EDF1FF;
   }
+  
 }
 
 /********** Custom CSS ************/
@@ -9637,4 +9640,23 @@ a.text-dark:hover, a.text-dark:focus {
   color: #000;
   cursor: pointer;
   text-decoration: none;
+}
+.mb-10{
+  float: right;
+}
+body{
+  overflow-x: hidden;
+}
+.percentage_discount{
+  margin-left: 3px;
+  color: #388e3c;
+  font-size: 13px;
+  letter-spacing: -.2px;
+  font-weight: 500;
+ 
+  
+}
+.cat_add{
+  float: right;
+  
 }

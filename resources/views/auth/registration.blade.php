@@ -29,6 +29,7 @@
                     <label for="exampleInputPassword1">Contact</label>
                     <input type="" name="contact" class="form-control" placeholder="contact number">
                 </div>
+                @error('contact')<p class="text-danger">{{$message}}</p> @enderror
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
 

@@ -19,7 +19,7 @@
                               @if($images->count())
                               @foreach($images as $key => $image)
                                 <div class="carousel-item {{ $key == 0? 'active': '' }}">
-                                    <img class="img-fluid p-5" src="/{{$image['file_name']}}" alt="image">
+                                    <img class="img-fluid p-5" src="/{{$image['file_name']}}" style="height:20em" alt="image">
                                 </div>
                                 @endforeach
                               @endif
@@ -50,10 +50,18 @@
                 </div>
                 <small class="pt-1">(50 Reviews)</small>
             </div>
-            <h5 class="font-weight-semi-bold mb-4">Price:{{$product['price']}}</h5>
+            @if($product['discounted_price'] > 0)
+              <h6><i class="fas fa-rupee-sign"></i>{{  number_format($product['discounted_price'],2) }}</h6>
+            @else
+              <h6><i class="fas fa-rupee-sign"></i>{{ $product['price'] }}</h6>
+            @endif
+            <h6 class="text-muted ml-2"><del><i class="fas fa-rupee-sign"></i>{{ number_format($product['price'], 2) }}</del></h6>
 
-            <p>Category:{{$product['category']}}</p>
-            <p class="mb-4">Description:{{$product['description']}}</p>
+            <span class="percentage_discount">{{($product['product_discount'])}}% off</span>
+           
+            <p>Category:{{ $product['category']}}</p>
+           
+            <p class="mb-4">Description:/{{$product['description']}}</p>
 
             <br>
             <form action="/add_to_cart" method="POST">
@@ -74,7 +82,7 @@
                 </div>
             </form>
 
-            <br><br>
+            <br>
             <a href="/" class="btn btn-primary">GO BACK</a>
         </div>
     </div>

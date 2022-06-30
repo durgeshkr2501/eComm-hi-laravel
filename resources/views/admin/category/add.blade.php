@@ -5,6 +5,7 @@
   <div class="card mt-4">
     <div class="card-header">
       <h4 class="">Add Category</h4>
+      
     </div>
     <div class="card-body">
       <form action="{{route('category.add')}}" method="post">
@@ -12,11 +13,25 @@
         @csrf
         <div class="mb-3">
           <label for="">Category Name</label>
-          <input type="text" name="name"  value="{{ isset($category) ? $category->name : ''}}"   class="form-control">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+          <input type="text" name="name"  value="{{ isset($category) ? $category->name : ''}}"   class="form-control col-md-7 col-xs-12 ">
+         
         </div>
+        </div>
+        
         <div class="mb-3">
-          <label for="">Slug</label>
-          <input type="text" name="slug" value="{{ isset($category) ? $category->slug : ''}}"  class="form-control">
+          <label for="">Sub Category Of <span class="required">*</span></label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select  name="category_id" id="" class="form-control col-md-7 col-xs-12">
+              <option value="">No Subcategory</option>
+              @if(isset($categories))
+              @foreach($categories as $_category)
+              <option value="{{$_category->id}}" @if(isset($category) && $category->category_id==$_category->id) selected @endif>
+              {{$_category->name}}</option>
+              @endforeach
+              @endif
+            </select>
+          </div>
         </div>
         <div class="mb-3">
           <label for="">Status</label>
