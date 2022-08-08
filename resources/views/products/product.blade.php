@@ -1,4 +1,5 @@
-<!-- Products Start -->
+
+<!-- Products Start  -->
 
 <div class="container-fluid pt-5">
 
@@ -11,20 +12,22 @@
     <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
       <div class="card product-item border-0 mb-4">
         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-2">
+
           <img class="img-fluid w-150" style="height: 200px;" src="/{{$item['gallery']}}" alt="">
+
         </div>
         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
           <h6 class="text-truncate mb-3">{{ $item['name'] }}</h6>
 
 
           <div class="d-flex justify-content-center">
-           
+ 
 
-           
+
             @if($item['discounted_price'] > 0)
-              <h6><i class="fas fa-rupee-sign"></i>{{  number_format($item['discounted_price'],2) }}</h6>
+            <h6><i class="fas fa-rupee-sign"></i>{{ number_format($item['discounted_price'],2) }}</h6>
             @else
-              <h6><i class="fas fa-rupee-sign"></i>{{ $item['price'] }}</h6>
+            <h6><i class="fas fa-rupee-sign"></i>{{ $item['price'] }}</h6>
             @endif
 
             <h6 class="text-muted ml-2"><del><i class="fas fa-rupee-sign"></i>{{ number_format($item['price'], 2) }}</del></h6>
@@ -47,7 +50,5 @@
 
   </div>
 </div>
-<div class="pagination">
-  {{ $products->links() }}
-</div>
-<!-- Products End -->
+
+ <!-- Products End -->

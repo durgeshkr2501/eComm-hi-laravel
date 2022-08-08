@@ -27,7 +27,7 @@ class ProductController extends Controller
     }
     function detail($id)
     {
-       
+        
          
         $data = product::find($id);
         return view('detail', ['product' => $data]);
@@ -35,9 +35,9 @@ class ProductController extends Controller
     }
     function search(Request $req, $category = null, $child_category = null, $child_category_id = null)
     {
-        $categories = Category::select("id", "category_id", "name", "slug")
-        ->with("childCategory")
-        ->whereNull('category_id')->get()->toArray();
+        // $categories = Category::select("id", "category_id", "name", "slug")
+        // ->with("childCategory")
+        // ->whereNull('category_id')->get()->toArray();
 
 
         $query_string = $req->input('query');
@@ -47,7 +47,7 @@ class ProductController extends Controller
             $query = $query->where('name', 'like', '%' . $query_string . '%')
                 ->orWhere('category', 'like', "%$query_string%");
         }
-            // ->where('description', 'like', "%$query%")
+            //  ->where('description', 'like', "%$query%");
         
         if(!is_null($child_category_id)) {
             $query = $query->where("category", $child_category_id);
@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         $data = $query->get();
 
-        return view('search', ['products' => $data],compact('categories'));
+        return view('search', ['products' => $data]);
     }
 
     public function buyNow(Request $req)

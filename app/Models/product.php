@@ -17,4 +17,9 @@ class product extends Model
         $percentage = $this->attributes['product_discount'];
         return $price - ($price * $percentage/100);
     }
+
+    public function _category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category');
+    }
 }

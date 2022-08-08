@@ -59,8 +59,8 @@
 
             <span class="percentage_discount">{{($product['product_discount'])}}% off</span>
            
-            <p>Category:{{ $product['category']}}</p>
-           
+            <p>Category:{{$product['_category'] ? $product['_category']['name'] : '' }}</p>
+          
             <p class="mb-4">Description:/{{$product['description']}}</p>
 
             <br>

@@ -99,6 +99,10 @@
     </div>
   </div>
 </div>
+
+<div class="pagination">
+  {{ $products->links() }}
+</div>
 <!-- Featured End -->
 
 @endsection

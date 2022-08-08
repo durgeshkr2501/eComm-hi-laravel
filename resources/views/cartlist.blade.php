@@ -27,7 +27,8 @@
                         @foreach($products as $key => $product)
                         <tr>
                             
-                            <td> {{ $product->name }}</td>
+                            <td ><img src="/{{$product['gallery']}}" alt=""style="height:45px"> {{ $product->name }}</td>
+                           
                             <td class="align-middle"><i class="fas fa-rupee-sign"></i>
                             {{  number_format($product['discounted_price'],2) }}
                             </td>

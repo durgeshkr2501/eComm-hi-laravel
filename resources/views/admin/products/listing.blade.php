@@ -31,11 +31,12 @@
                 <h6 style="margin-left:20px;">Status</h6>
               </th>
               <th>
-                <h6>Action</h6>
-              </th>
-              <th>
                 <h6 style="margin-left:20px;">Discount</h6>
               </th>
+              <th>
+                <h6>Action</h6>
+              </th>
+              
             </tr>
             <!-- end table row-->
           </thead>
@@ -54,15 +55,18 @@
                 <p><i class="fas fa-rupee-sign"></i>{{ number_format($item['price'], 2) }}</p>
               </td>
               <td class="min-width">
-                <p>{{$item['category']}}</p>
+                <p>{{ $item->_category ? $item->_category['name'] : '' }}</p>
               </td>
 
               <td class="min-width">
                 @if($item->status == '1')
-                <a href="{{route('product.status-update',$item['id'])}}" class="btn btn-success">Active</a>
+                <a href="{{route('product.status-update',$item['id'])}}" class="btn btn-sm btn-success">Active</a>
                 @else
-                <a href="{{route('product.status-update',$item['id'])}}" class="btn btn-danger">Inactive</a>
+                <a href="{{route('product.status-update',$item['id'])}}" class="btn btn-sm btn-danger">Inactive</a>
                 @endif
+              </td>
+              <td>
+              <p style="margin-left:30px;">{{($item['product_discount'])}}</p>
               </td>
               <td>
                 <div class="action" style="margin-left:10px;">
@@ -75,9 +79,7 @@
                   </a>
                 </div>
               </td>
-              <td>
-              <p style="margin-left:30px;">{{($item['product_discount'])}}</p>
-              </td>
+              
             </tr>
             @endforeach
             <!-- end table row -->

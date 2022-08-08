@@ -15,8 +15,8 @@ class ProductController extends Controller
 
     public function listing()
     {
-        $data = Product::latest()->paginate(10);
-        
+        $data = Product::latest()->with(['_category'])->paginate(10);
+                
         return view('admin.products.listing', ['products' => $data]);
     }
 
